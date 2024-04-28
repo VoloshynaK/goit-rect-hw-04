@@ -1,11 +1,12 @@
 import { useState} from 'react'
-import { ColorRing } from 'react-loader-spinner'
-
+import { Toaster } from 'react-hot-toast';
 
 import SearchBar from './Components/SearchBar/SearchBar'
 import ImageGallery from './Components/ImageGallery/ImageGallery'
 import ImageModal from './Components/ImageModal/ImageModal'
 import LoadMoreBtn from './Components/LoadMoreBtn/LoadMoreBtn'
+import Loader from './Components/Loader/Loader'
+import ErrorMessage from './Components/ErrorMessage/ErrorMessage'
 
 import fetchImages from './photos-api'
 
@@ -16,42 +17,36 @@ function App() {
   const [images, setImages] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [imageInfo, setImageInfo] = useState({alt: '', url: ''});
+  const [isVisible, setIsVisible] = useState(false);
+  const [error, setError] = useState(false);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const value = form.elements.searchBar.value;
-    setQuery(value);
-    
-    
-    if(value.trim() === "") {
-			alert("Please enter search term!")
-			return;
-		}
-    handleSearch(value);
-    form.reset();
-  }
-
+ 
   const handleSearch = async (value) => {
     try {
       setImages([]);
-      setPage(1)
+      setPage(1);
+      setIsVisible(true);
       const data = await fetchImages(value, page);
       setImages(data.results);
     } catch(error) {
-      console.log(error);
+      setError(true);
+    } finally {
+      setIsVisible(false);
     }
   }
 
   const handleLoadMore = async () => {
     
     try {
+      setIsVisible(true);
       const nextPage = page + 1;
       const data = await fetchImages(query, nextPage);
       setImages([...images, ...data.results])
       setPage(nextPage);
     } catch (error) {
-      console.log(error)
+      setError(true);
+    } finally {
+      setIsVisible(false);
     }
   } 
 
@@ -69,19 +64,12 @@ function App() {
   
   return (
     <>
-      <SearchBar handleSubmit={handleSubmit}/>
-      <ImageGallery items={images} openModal={openModal}/>
-      <ColorRing
-        visible={true}
-        height="80"
-        width="80"
-        ariaLabel="color-ring-loading"
-        wrapperStyle={{}}
-        wrapperClass="color-ring-wrapper"
-        colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
-      />
+      <SearchBar handleSearch={handleSearch} setQuery={setQuery}/>
+      <Toaster/>
+      {error ? <ErrorMessage/> : <ImageGallery items={images} openModal={openModal}/>}
+      {isVisible && <Loader isVisible={isVisible}/>}
       <ImageModal isModalOpen={isOpen} closeModal={closeModal} imageInfo={imageInfo}/>
-      <LoadMoreBtn handleLoadMore={handleLoadMore}/>
+      {images.length > 0 && <LoadMoreBtn handleLoadMore={handleLoadMore}/>}
       
     </>
   )

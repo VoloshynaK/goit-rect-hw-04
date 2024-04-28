@@ -1,19 +1,25 @@
 .searchBar {
     width: 100%;
-    height: 46px;
+    height: 40vh;
+    margin-bottom: 32px;
 
     display: flex;
     justify-content: center;
     align-items: center;
 
-    background-color: cornflowerblue;
-    background-color: rgba(0, 0, 0, 0.455);
+    background-image: url('../../img/vidar-nordli-mathisen-I1jXQuOGjJU-unsplash.jpg');
+    background-position: 50% 50%;
 }
-.thumb {
+
+.form {
     position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 25px;
 
 }
-.thumb > .searchIcon {
+
+.form > .searchIcon {
     position: absolute;
     top: 6px;
     left: 10px;
@@ -21,13 +27,27 @@
 }
 
 .searchInput {
-    font-size: 16px;
-    padding: 4px 8px 4px 30px;
-    margin-left: auto;
-    margin-right: auto;
+    font-size: 20px;
+    padding: 8px 14px 8px 40px;
+    margin-right: 16px;
     width: 300px;
     outline: none;
     border: 1px solid black;
     border-radius: 8px;
 
+}
+
+.searchBtn {
+    color: black;
+    font-size: 20px;
+    padding: 8px 14px;
+    background-color: white;
+    outline: none;
+    border: 1px solid black;
+    border-radius: 8px;
+    cursor: pointer;
+    
+}
+.searchBtn:hover, .searchBtn:focus {
+    background-color: #f5f5f5;
 }
