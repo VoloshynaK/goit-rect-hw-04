@@ -11,7 +11,6 @@ import ErrorMessage from './components/ErrorMessage/ErrorMessage.jsx'
 import fetchImages from './photos-api.js'
 
 
-
 function App() {
   const [query, setQuery] = useState('');
   const [page, setPage] = useState(1);
