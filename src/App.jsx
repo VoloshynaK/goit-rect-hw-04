@@ -1,7 +1,7 @@
 import { useState} from 'react'
 import { Toaster } from 'react-hot-toast';
 
-import SearchBar from './components/SearchBar/SearchBar'
+import SearchBar from './components/SearchBar/SearchBar.jsx'
 import ImageGallery from './components/ImageGallery/ImageGallery'
 import ImageModal from './components/ImageModal/ImageModal'
 import LoadMoreBtn from './components/LoadMoreBtn/LoadMoreBtn'
