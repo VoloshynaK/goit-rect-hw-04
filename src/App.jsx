@@ -1,12 +1,12 @@
 import { useState} from 'react'
 import { Toaster } from 'react-hot-toast';
 
-import SearchBar from './components/SearchBar/SearchBar.jsx'
-import ImageGallery from './components/ImageGallery/ImageGallery.jsx'
-import ImageModal from './components/ImageModal/ImageModal.jsx'
-import LoadMoreBtn from './components/LoadMoreBtn/LoadMoreBtn.jsx'
-import Loader from './components/Loader/Loader.jsx'
-import ErrorMessage from './components/ErrorMessage/ErrorMessage.jsx'
+import SearchBar from './pages/SearchBar/SearchBar.jsx'
+import ImageGallery from './pages/ImageGallery/ImageGallery.jsx'
+import ImageModal from './pages/ImageModal/ImageModal.jsx'
+import LoadMoreBtn from './pages/LoadMoreBtn/LoadMoreBtn.jsx'
+import Loader from './pages/Loader/Loader.jsx'
+import ErrorMessage from './pages/ErrorMessage/ErrorMessage.jsx'
 
 import fetchImages from './photos-api.js'
 
