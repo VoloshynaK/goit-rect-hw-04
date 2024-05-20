@@ -1,4 +1,4 @@
-import { useState} from 'react'
+import { useState, useEffect} from 'react'
 import { Toaster } from 'react-hot-toast';
 
 import SearchBar from './components/SearchBar/SearchBar.jsx'
@@ -17,37 +17,37 @@ function App() {
   const [images, setImages] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [imageInfo, setImageInfo] = useState({alt: '', url: ''});
-  const [isVisible, setIsVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
 
- 
-  const handleSearch = async (value) => {
-    try {
-      setImages([]);
-      setPage(1);
-      setIsVisible(true);
-      const data = await fetchImages(value, page);
-      setImages(data.results);
-    } catch(error) {
-      setError(true);
-    } finally {
-      setIsVisible(false);
+  useEffect(() => {
+    const getImages = async () => {
+      try {
+        setIsLoading(true);
+        const data = await fetchImages(query, page);
+        setImages((prevImg) => [...prevImg, ...data.results]);
+      } catch(error) {
+        setError(true);
+      } finally {
+        setIsLoading(false);
+      }
     }
+    getImages();
+  }, [query, page]);
+
+
+  const handleSearch = (value) => {
+    setImages([])
+    setQuery(value);
+    setPage(1);
   }
 
-  const handleLoadMore = async () => {
-    
-    try {
-      setIsVisible(true);
-      const nextPage = page + 1;
-      const data = await fetchImages(query, nextPage);
-      setImages([...images, ...data.results])
-      setPage(nextPage);
-    } catch (error) {
-      setError(true);
-    } finally {
-      setIsVisible(false);
-    }
+ 
+  
+
+  const handleLoadMore = () => {
+    const nextPage = page + 1;
+    setPage(nextPage);
   } 
 
 
@@ -67,7 +67,7 @@ function App() {
       <SearchBar handleSearch={handleSearch} setQuery={setQuery}/>
       <Toaster/>
       {error ? <ErrorMessage/> : <ImageGallery items={images} openModal={openModal}/>}
-      {isVisible && <Loader isVisible={isVisible}/>}
+      {isLoading && <Loader isLoading={isLoading}/>}
       <ImageModal isModalOpen={isOpen} closeModal={closeModal} imageInfo={imageInfo}/>
       {images.length > 0 && <LoadMoreBtn handleLoadMore={handleLoadMore}/>}
       

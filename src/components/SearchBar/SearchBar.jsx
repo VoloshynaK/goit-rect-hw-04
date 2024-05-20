@@ -14,13 +14,12 @@ const notify = () => toast.error('Please, enter the keyword!', {
     },
   });
 
-export default function SearchBar ({handleSearch, setQuery}) {
+export default function SearchBar ({handleSearch}) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
         const form = e.target;
         const value = form.elements.searchBar.value;
-        setQuery(value);
         
         
         if(value.trim() === "") {
