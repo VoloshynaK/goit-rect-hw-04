@@ -21,6 +21,7 @@ function App() {
   const [error, setError] = useState(false);
 
   useEffect(() => {
+    if (!query) {return;}
     const getImages = async () => {
       try {
         setIsLoading(true);

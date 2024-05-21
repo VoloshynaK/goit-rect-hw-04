@@ -5,6 +5,6 @@ const URL = `https://api.unsplash.com/search/photos/?client_id=${accessKey}`;
 
 
 export default async function fetchImages (value, page) {
-    const response = await axios.get(`${URL}&page=${page}&orientation=landscape&query='${value}'`);
+    const response = await axios.get(`${URL}&page=${page}&orientation=landscape&query=${value}`);
     return response.data;
 }
